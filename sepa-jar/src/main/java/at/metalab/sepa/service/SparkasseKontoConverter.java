@@ -44,7 +44,7 @@ public class SparkasseKontoConverter extends AbstractKontoConverter {
 			
 			return s;
 		} catch (Exception exception) {
-			throw new SepaException(exception);
+			throw new SepaException("could not resolve name for bic", exception);
 		}
 	}
 
