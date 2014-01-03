@@ -1,9 +1,5 @@
 package at.metalab.sepa;
 
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-
 import at.metalab.sepa.bo.BlzKonto;
 import at.metalab.sepa.bo.IbanKonto;
 
@@ -35,29 +31,6 @@ public class Metalab {
 
 	public IbanKonto getIbanKonto() {
 		return ibanKonto;
-	}
-
-	public static Reader getCollectionCsv() throws UnsupportedEncodingException {
-		return getUTF8Reader("data/collection.txt");
-	}
-
-	public static Reader getCollectionSepaCsv()
-			throws UnsupportedEncodingException {
-		return getUTF8Reader("data/collection_sepa.txt");
-	}
-
-	public static Reader getStuzzaReturnCsv()
-			throws UnsupportedEncodingException {
-		return getUTF8Reader("data/stuzza_return.txt");
-	}
-
-	private static Reader getUTF8Reader(String resourceName)
-			throws UnsupportedEncodingException {
-		Reader reader = new InputStreamReader(Thread.currentThread()
-				.getContextClassLoader().getResourceAsStream(resourceName),
-				"UTF-8");
-
-		return reader;
 	}
 
 }

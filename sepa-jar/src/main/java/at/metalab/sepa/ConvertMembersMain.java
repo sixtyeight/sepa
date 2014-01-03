@@ -16,14 +16,16 @@ import at.metalab.sepa.service.StuzzaKontoConverter;
 public class ConvertMembersMain {
 
 	public static void main(String[] args) throws Exception {
+		Files files = Files.METALAB_TESTDATA;
+
 		// read the member data from the MOS collection csv flatfile
 		System.out.println("loading member data ...");
-		List<Member> members = MOS.readLegacy(Metalab.getCollectionCsv());
+		List<Member> members = MOS.readLegacy(files.getCollectionCsv());
 		System.out.println("done\n");
 
 		// read the stuzza provided mappings for bic / iban lookup
 		IKontoConverter kontoConverter = new StuzzaKontoConverter(
-				Stuzza.readResponse(Metalab.getStuzzaReturnCsv()));
+				Stuzza.readResponse(files.getStuzzaReturnCsv()));
 
 		// use the BankCode.net homepage to screen scrape the name of the banks
 		IBankService bankService = new BankCodeDotNetBankService();

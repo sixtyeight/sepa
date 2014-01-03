@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import at.metalab.sepa.Files;
 import at.metalab.sepa.Metalab;
 import at.metalab.sepa.SepaException;
 import at.metalab.sepa.bo.Bank;
@@ -30,14 +31,16 @@ import at.metalab.sepa.validation.sanity.OwnerContainsNameValidator;
 public class ConvertAccountMain {
 
 	public static void main(String[] args) throws Exception {
+		Files files = Files.METALAB_TESTDATA;
+
 		IBankService bankService = new BankCodeDotNetBankService();
 
 		IKontoConverter kontoConverter = null;
 		// kontoConverter = new SparkasseKontoConverter();
-		kontoConverter = new StuzzaKontoConverter(Stuzza.readResponse(Metalab
+		kontoConverter = new StuzzaKontoConverter(Stuzza.readResponse(files
 				.getStuzzaReturnCsv()));
 
-		List<Member> members = MOS.readLegacy(Metalab.getCollectionCsv());
+		List<Member> members = MOS.readLegacy(files.getCollectionCsv());
 
 		System.out.println();
 
