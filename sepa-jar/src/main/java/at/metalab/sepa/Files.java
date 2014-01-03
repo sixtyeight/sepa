@@ -29,6 +29,11 @@ public abstract class Files {
 		return getUTF8Reader("stuzza_return.txt");
 	}
 
+	public Reader getNotReallyLikeMosCsv() throws UnsupportedEncodingException,
+			FileNotFoundException {
+		return getUTF8Reader("bank_data.csv");
+	}
+
 	protected abstract Reader getUTF8Reader(String resourceName)
 			throws FileNotFoundException, UnsupportedEncodingException;
 
