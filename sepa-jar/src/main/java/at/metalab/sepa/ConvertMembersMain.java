@@ -59,7 +59,7 @@ public class ConvertMembersMain {
 
 		System.out.println();
 
-		MosSql.writeUpdate(convertedMembers);
+		MOSSql.writeUpdate(convertedMembers);
 	}
 
 }

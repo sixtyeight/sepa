@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import at.metalab.sepa.bo.Member;
 
-public class MosSql {
+public class MOSSql {
 
 	public static void writeUpdate(Collection<Member> members) {
 		for (Member member : members) {
