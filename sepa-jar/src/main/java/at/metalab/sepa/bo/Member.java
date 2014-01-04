@@ -15,11 +15,11 @@ public class Member {
 	public void setMandatsReferenz(String mandatsReferenz) {
 		this.mandatsReferenz = mandatsReferenz;
 	}
-	
+
 	public String getMandatsReferenz() {
 		return mandatsReferenz;
 	}
-	
+
 	public void setAccount(Account account) {
 		this.account = account;
 	}
@@ -70,16 +70,26 @@ public class Member {
 
 	public final static Comparator<Member> BY_BLZ_KONTO = new Comparator<Member>() {
 		public int compare(Member o1, Member o2) {
-			int blz = Long.valueOf(o1.getAccount().getBlzKonto().getBlz())
-					.compareTo(o2.getAccount().getBlzKonto().getBlz());
+			int blz = Long
+					.valueOf(o1.getAccount().getBlzKonto().getBlz())
+					.compareTo(
+							Long.valueOf(o2.getAccount().getBlzKonto().getBlz()));
 			if (blz == 0) {
 				return Long.valueOf(
 						o1.getAccount().getBlzKonto().getKontonummer())
 						.compareTo(
-								o2.getAccount().getBlzKonto().getKontonummer());
+								Long.valueOf(o2.getAccount().getBlzKonto()
+										.getKontonummer()));
 			}
 
 			return blz;
+		}
+	};
+
+	public final static Comparator<Member> BY_MANDATS_REFERENZ = new Comparator<Member>() {
+		public int compare(Member o1, Member o2) {
+			return Long.valueOf(o1.getMandatsReferenz()).compareTo(
+					Long.valueOf(o2.getMandatsReferenz()));
 		}
 	};
 

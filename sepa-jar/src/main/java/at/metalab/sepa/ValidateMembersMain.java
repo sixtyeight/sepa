@@ -1,6 +1,7 @@
 package at.metalab.sepa;
 
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,6 +52,8 @@ public class ValidateMembersMain {
 		List<Member> convertedMembers = new LinkedList<Member>();
 		convertedMembers.addAll(conversionResult.selectOkWithWarnings());
 		convertedMembers.addAll(conversionResult.selectOkWithoutWarnings());
+
+		Collections.sort(convertedMembers, Member.BY_MANDATS_REFERENZ);
 
 		MOS.writeSepa(new PrintWriter(System.out), convertedMembers,
 				"Mitgliedsbeitrag 2013/12", Metalab.INSTANCE.getCreditorId());
