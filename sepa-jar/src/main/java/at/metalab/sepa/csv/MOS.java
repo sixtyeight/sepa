@@ -50,11 +50,9 @@ public class MOS {
 
 	private static void writeSepa(Writer out, Member member, String creditorId)
 			throws IOException {
-		out.write(String.format("%s;%s;%s;%s;%s;", member.getAccount()
-				.getIbanKonto().getBic(), member.getAccount().getIbanKonto()
-				.getIban(), creditorId, member.getMandatsReferenz(), member
-				.getAccount().getBank() != null ? member.getAccount().getBank()
-				.getName() : "?"));
+		out.write(String.format("%s;%s;%s", member.getAccount().getIbanKonto()
+				.getIban(), member.getAccount().getIbanKonto().getBic(),
+				member.getMandatsReferenz()));
 	}
 
 	public static List<Member> readLegacy(Reader in) throws IOException {
