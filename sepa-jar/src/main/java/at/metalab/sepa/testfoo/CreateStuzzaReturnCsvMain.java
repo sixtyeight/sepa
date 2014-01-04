@@ -14,7 +14,7 @@ public class CreateStuzzaReturnCsvMain {
 	public static void main(String[] args) throws Exception {
 		Files files = Files.METALAB_TESTDATA;
 
-		List<Member> members = MOS.readSepa(files.getCollectionCsv());
+		List<Member> members = MOS.readSepa(files.getCollectionSepaCsv());
 		Collections.sort(members, Member.BY_BLZ_KONTO);
 
 		System.out.println();
