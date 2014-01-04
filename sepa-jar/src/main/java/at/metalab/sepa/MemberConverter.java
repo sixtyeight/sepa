@@ -18,7 +18,6 @@ import at.metalab.sepa.validation.iban.ApacheIbanAdapterValidator;
 import at.metalab.sepa.validation.iban.GarvelinkIbanAdapterValidator;
 import at.metalab.sepa.validation.iban.JbankingIbanAdapterValidator;
 import at.metalab.sepa.validation.iban.JdtausIbanAdapterValidator;
-import at.metalab.sepa.validation.sanity.BankFoundValidator;
 import at.metalab.sepa.validation.sanity.BicIsAustrianValidator;
 import at.metalab.sepa.validation.sanity.IbanIsAustrianValidator;
 import at.metalab.sepa.validation.sanity.IbanMatchesBlzKontoValidator;
@@ -40,7 +39,6 @@ public class MemberConverter {
 		validators.add(BicIsAustrianValidator.INSTANCE);
 		validators.add(OwnerContainsNameValidator.INSTANCE);
 		validators.add(IbanMatchesBlzKontoValidator.INSTANCE);
-		validators.add(BankFoundValidator.INSTANCE);
 
 		validators.add(ApacheIbanAdapterValidator.INSTANCE);
 		validators.add(GarvelinkIbanAdapterValidator.INSTANCE);
@@ -214,8 +212,7 @@ public class MemberConverter {
 			try {
 				Bank bank = bankService.getBank(ibanKonto.getBic());
 				member.getAccount().setBank(bank);
-			}
-			catch(SepaException sepaException) {
+			} catch (SepaException sepaException) {
 				conversionResult.getWarnings().add(sepaException);
 			}
 
@@ -224,6 +221,20 @@ public class MemberConverter {
 			validate(member, conversionResult);
 		} catch (SepaException sepaException) {
 			conversionResult.getErrors().add(sepaException);
+		}
+
+		return conversionResult;
+	}
+
+	public ConversionResult validate(Collection<Member> members) {
+		ConversionResult conversionResult = new ConversionResult();
+
+		for (Member member : members) {
+			MemberResult memberResult = new MemberResult();
+
+			validate(member, memberResult);
+
+			conversionResult.getResults().put(member, memberResult);
 		}
 
 		return conversionResult;

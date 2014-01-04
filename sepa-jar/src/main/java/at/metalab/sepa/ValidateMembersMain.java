@@ -7,21 +7,19 @@ import java.util.List;
 import at.metalab.sepa.MemberConverter.ConversionResult;
 import at.metalab.sepa.bo.Member;
 import at.metalab.sepa.csv.MOS;
-import at.metalab.sepa.csv.NotReallyLikeMOS;
 import at.metalab.sepa.service.BankCodeDotNetBankService;
 import at.metalab.sepa.service.IBankService;
 import at.metalab.sepa.service.IKontoConverter;
 import at.metalab.sepa.service.SparkasseKontoConverter;
 
-public class ConvertMembersMain {
+public class ValidateMembersMain {
 
 	public static void main(String[] args) throws Exception {
 		Files files = Files.METALAB_PRODUCTION;
 
 		// read the member data from the MOS collection csv flatfile
 		System.out.println("loading member data ...");
-		List<Member> members = // MOS.readLegacy(files.getCollectionCsv());
-		NotReallyLikeMOS.read(files.getNotReallyLikeMosCsv());
+		List<Member> members = MOS.readSepa(files.getCollectionSepaCsv());
 		System.out.println("done\n");
 
 		// read the stuzza provided mappings for bic / iban lookup
@@ -40,8 +38,8 @@ public class ConvertMembersMain {
 				bankService);
 
 		// convert the read members
-		System.out.println("converting the members ...");
-		ConversionResult conversionResult = memberConverter.convert(members);
+		System.out.println("validating the members ...");
+		ConversionResult conversionResult = memberConverter.validate(members);
 		System.out.println("done\n");
 
 		// display the result
@@ -56,10 +54,6 @@ public class ConvertMembersMain {
 
 		MOS.writeSepa(new PrintWriter(System.out), convertedMembers,
 				"Mitgliedsbeitrag 2013/12", Metalab.INSTANCE.getCreditorId());
-
-		System.out.println();
-
-		MosSql.writeUpdate(convertedMembers);
 	}
 
 }

@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import at.metalab.sepa.bo.Bank;
 import at.metalab.sepa.bo.BlzKonto;
 import at.metalab.sepa.bo.IbanKonto;
 import at.metalab.sepa.bo.Member;
@@ -85,6 +84,8 @@ public class MOS {
 			} catch (Exception exception) {
 				System.out
 						.println(String.format("could not parse: %s", csvRow));
+
+				exception.printStackTrace();
 				countFailed++;
 			}
 		}
@@ -120,19 +121,12 @@ public class MOS {
 		stringTokenizer.nextToken(); // skip verwendungszweck column
 
 		if (sepa) {
-			String bic = stringTokenizer.nextToken();
 			String iban = stringTokenizer.nextToken();
+			String bic = stringTokenizer.nextToken();
+			member.setMandatsReferenz(stringTokenizer.nextToken());
 
 			IbanKonto ibanKonto = new IbanKonto(bic, iban);
 			member.getAccount().setIbanKonto(ibanKonto);
-
-			stringTokenizer.nextToken(); // skip creditor id column
-
-			member.setMandatsReferenz(stringTokenizer.nextToken());
-
-			Bank bank = new Bank();
-			bank.setName(stringTokenizer.nextToken());
-			member.getAccount().setBank(bank);
 		}
 
 		return member;

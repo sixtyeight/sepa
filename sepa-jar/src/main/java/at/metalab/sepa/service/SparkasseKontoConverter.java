@@ -41,10 +41,10 @@ public class SparkasseKontoConverter extends AbstractKontoConverter {
 			String s = stringWriter.toString().replace(
 					"listofbic==<span class='amount strong'>", "");
 			s = s.substring(0, s.indexOf("<"));
-			
+
 			return s;
 		} catch (Exception exception) {
-			throw new SepaException("could not resolve name for bic", exception);
+			throw new SepaException("could not resolve bic for blz", exception);
 		}
 	}
 
